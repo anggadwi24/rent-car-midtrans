@@ -16,6 +16,7 @@
                         <th>Merk</th>
                         <th>Trasmisi</th>
                         <th>Bahan Bakar</th>
+                        <th>qty</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
@@ -40,6 +41,7 @@
                         </td>
                         <td><?= $mbl['mobil_transmisi'] ?></td>
                         <td><?= $mbl['mobil_fuel'] ?></td>
+                        <td><?= $mbl['mobil_qty'] ?></td>
                         <td>
                             <?php if ($mbl['mobil_available']=='y') {
                                 echo "Tersedia";

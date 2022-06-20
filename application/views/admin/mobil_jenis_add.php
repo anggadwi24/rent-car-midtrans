@@ -29,23 +29,27 @@
             <textarea class="form-control" name="mobil_desc"></textarea>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label>Bahan Bakar</label>
               <input type="text" class="form-control" name="mobil_fuel">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label>Transmisi</label>
               <select class="form-control" name="mobil_transmisi">
                   <option>Manual</option>
                   <option>Matic</option>
               </select>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label>Status</label>
               <select class="form-control" name="mobil_avaliable">
                   <option value="y">Tersedia</option>
                   <option value="n">Tidak Tersedia</option>
               </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label>Qty</label>
+              <input type="number" class="form-control" name="mobil_qty">
             </div>
           </div>
           <div class="form-row">

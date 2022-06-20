@@ -108,6 +108,7 @@ class Mobil extends CI_Controller
         $mobil_fuel     = $this->input->post('mobil_fuel');
         $mobil_transmisi = $this->input->post('mobil_transmisi');
         $mobil_avaliable = $this->input->post('mobil_avaliable');
+        $mobil_qty      = $this->input->post('mobil_qty');
 
         $data = array(
             'mobil_name'        => $mobil_name,
@@ -116,6 +117,7 @@ class Mobil extends CI_Controller
             'mobil_desc'        => $mobil_desc,
             'mobil_fuel'        => $mobil_fuel,
             'mobil_transmisi'   => $mobil_transmisi,
+            'mobil_qty'         => $mobil_qty,
             'mobil_available'   => $mobil_avaliable
         );
 
@@ -208,6 +210,7 @@ class Mobil extends CI_Controller
         $mobil_desc     = $this->input->post('mobil_desc');
         $mobil_fuel     = $this->input->post('mobil_fuel');
         $mobil_transmisi = $this->input->post('mobil_transmisi');
+        $mobil_qty      = $this->input->post('mobil_qty');
         $mobil_avaliable = $this->input->post('mobil_avaliable');
         $cek = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$mobil_id));
         if($cek->num_rows() > 0){
@@ -218,6 +221,7 @@ class Mobil extends CI_Controller
                 'mobil_desc'        => $mobil_desc,
                 'mobil_fuel'        => $mobil_fuel,
                 'mobil_transmisi'   => $mobil_transmisi,
+                'mobil_qty'         => $mobil_qty,
                 'mobil_available'   => $mobil_avaliable
             );
     
@@ -229,7 +233,7 @@ class Mobil extends CI_Controller
             $this->session->set_flashdata('success','Mobil Berhasil Diubah');
             redirect('admin/master/mobil/jenis_mobil');
         }else{
-            $this->session->set_flashdata('success','Mobil Berhasil tidak ditemukan');
+            $this->session->set_flashdata('success','Mobil tidak ditemukan');
     
             redirect('admin/master/mobil/jenis_mobil');
         }

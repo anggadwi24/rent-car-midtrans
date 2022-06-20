@@ -12,7 +12,11 @@ class Mobil extends CI_Controller
             $label = '';
         }else{ 
             $data1 = $this->model_app->like('cr_mobil',array('mobil_name'=>$cari_mobil));
-            $label = 'Kata Kunci "'.$cari_mobil.'"';
+        	if($data1->num_rows() > 0){
+            	$label = '<div class="alert alert-success" role="alert" align="center">Kata Kunci '.$cari_mobil.'</div>';
+	        }else{
+            	$label = '<div class="alert alert-danger" role="alert" align="center">Kata Kunci Tidak Tersedia</div>';
+	        }
         }
 
         $data['mobil'] = $data1;

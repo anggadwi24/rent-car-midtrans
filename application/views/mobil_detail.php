@@ -58,9 +58,13 @@
                                     echo $merk['merk_name']; ?>
                                 </span>
                             </div>
+                            <div class="col-md-12 col-12 mb-2">
+                                <i class="fa fa-car text-primary mr-2"></i>
+                                <span>Stok Ketersediaan Mobil : <?= $mobil['mobil_qty'] ?></span>
+                            </div>
                         </div>
                         <br>
-                        <?php if($mobil['mobil_available'] == 'y'){ ?>
+                        <?php if($mobil['mobil_available'] == 'y' && $mobil['mobil_qty'] >= 1){ ?>
                         <div class="form-group mb-0">
                             <a href="<?= base_url('transaksi/booking?seo='.$mobil['mobil_seo']) ?>" class="btn btn-primary btn-block pb-4" style="height: 50px;">Pesan Sekarang</a>
                         </div>

@@ -170,6 +170,34 @@ class Transaksi extends CI_Controller
 
 	public function booking_add()
 	{
+		$config1['upload_path']     = './upload/user/';
+		$config1['encrypt_name'] 	= TRUE;
+		$config1['allowed_types']   = 'gif|jpg|png|jpeg';
+		$config1['max_size']        = 1000;
+			
+				
+		$this->load->library('upload', $config1,'ktp');
+		$this->ktp->initialize($config1);
+
+		
+		$config2['upload_path']     = './upload/user/';
+		$config2['encrypt_name'] 	= TRUE;
+		$config2['allowed_types']   = 'gif|jpg|png|jpeg';
+		$config2['max_size']        = 1000;
+			
+				
+		$this->load->library('upload', $config2,'sim');
+		$this->sim->initialize($config2);
+
+        if(!$this->ktp->do_upload('ktp') OR !$this->sim->do_upload('sim')){
+            $this->upload->display_errors();
+        }else{
+             $upload_data1 = $this->ktp->data();
+				$trans_cus_ktp = $upload_data1['file_name'];
+			$upload_data2 = $this->sim->data();
+				$trans_cus_sim = $upload_data2['file_name'];
+        }
+
 		$trans_cus_name 	= $this->input->post('trans_cus_name');
         $trans_cus_id 		= $this->input->post('trans_cus_id');
         $trans_cus_phone 	= $this->input->post('trans_cus_phone');
@@ -221,6 +249,8 @@ class Transaksi extends CI_Controller
 	            'trans_cus_id' 		=> $trans_cus_id,
 	            'trans_cus_phone' 	=> $trans_cus_phone,
 	            'trans_cus_email' 	=> $trans_cus_email,
+	            'trans_cus_ktp' 	=> $trans_cus_ktp,
+	            'trans_cus_sim' 	=> $trans_cus_sim,
 	            'trans_date_start' 	=> $trans_date_start,
 	            'trans_date_end' 	=> $trans_date_end,
 	            'trans_time' 		=> $trans_time,
@@ -236,6 +266,12 @@ class Transaksi extends CI_Controller
 	        );
 
 	        $this->model_app->insert('cr_transaksi',$data);
+        	
+        	$stokmobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$trans_mobil_id));
+        	if ($mobil -> num_rows()>0) {
+        		$row = $stokmobil->row_array();
+				$this->db->query("UPDATE cr_mobil set mobil_qty = mobil_qty - 1 where mobil_id = $row[mobil_id]");
+        	}else{}
 	        $this->session->set_userdata('trans_no',$trans_no);
 	        redirect('transaksi/checkout');
         }else{

@@ -81,8 +81,9 @@ input:checked + .slider:before {
             <div class="row">
                 <div class="col-lg-7 mb-2">
                     <div class="contact-form bg-light mb-4" style="padding: 30px;">
-                        <form action="<?= base_url('transaksi/booking_add') ?>" method="post">
+                        <form action="<?= base_url('transaksi/booking_add') ?>" method="post" enctype="multipart/form-data" accept="image/*">
                             <h4 class="text-uppercase text-center mb-5 text-primary">Data Customer</h4>
+                            <input type="hidden" name="trans_cus_id" value="<?= $this->session->userdata['login_cus']['cus_id'] ?>">
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <input type="text" class="form-control p-4" name="trans_cus_name" value="<?= $this->session->userdata['login_cus']['cus_name'] ?>" readonly>
@@ -93,8 +94,18 @@ input:checked + .slider:before {
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control p-4" name="trans_cus_phone" value="<?= $this->session->userdata['login_cus']['cus_phone'] ?>" readonly>
-                                <input type="hidden" name="trans_cus_id" value="<?= $this->session->userdata['login_cus']['cus_id'] ?>">
                             </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Scan KTP</label>
+                                    <input type="file" class="form-control" name="ktp"  required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Scan SIM</label>
+                                    <input type="file" class="form-control" name="sim"  required>
+                                </div>
+                            </div>
+                            <small>* Scan KTP/SIM dengan format JPG/PNG</small>
                             <br><hr width="60%">
                             <h4 class="text-uppercase text-center mb-5 text-primary">Data Mobil</h4>
                             <div class="row">
