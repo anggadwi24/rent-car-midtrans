@@ -274,6 +274,7 @@ class Transaksi extends CI_Controller
         	}else{}
 	        $this->session->set_userdata('trans_no',$trans_no);
 	        redirect('transaksi/checkout');
+	        
         }else{
         	$this->session->set_flashdata('error','Mobil tidak ditemukan!');
         	redirect('transaksi/booking');
