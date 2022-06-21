@@ -15,7 +15,7 @@ class Ketersediaan extends CI_Controller
 
 	public function index()
 	{
-        $data['mobil'] = $this->model_app->view_where('cr_mobil',array('mobil_available='=>'y'));
+        $data['mobil'] = $this->model_app->view_where('cr_mobil',array('mobil_available='=>'y','mobil_qty >='=>0));
 		$this->template->load('template_admin','admin/sewa_ketersediaan',$data);
 	}
 

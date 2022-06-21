@@ -95,16 +95,7 @@ input:checked + .slider:before {
                             <div class="form-group">
                                 <input type="text" class="form-control p-4" name="trans_cus_phone" value="<?= $this->session->userdata['login_cus']['cus_phone'] ?>" readonly>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label>Scan KTP</label>
-                                    <input type="file" class="form-control" name="ktp"  required>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>Scan SIM</label>
-                                    <input type="file" class="form-control" name="sim"  required>
-                                </div>
-                            </div>
+                            
                             <small>* Scan KTP/SIM dengan format JPG/PNG</small>
                             <br><hr width="60%">
                             <h4 class="text-uppercase text-center mb-5 text-primary">Data Mobil</h4>
@@ -171,6 +162,18 @@ input:checked + .slider:before {
                                     <p id="harga_paket"></p>
                                 </div> -->
                             </div>
+                            <div class=" form-group " id="formKTP">
+                                <label for="">KTP Pelanggan</label>
+                                <input type="file" class="form-control" name="ktp" accept="image/*" id="ktp">
+                            </div>
+                            <div class=" form-group " id="formSIM">
+                                <label for="">SIM A Pelanggan</label>
+                                <input type="file" class="form-control" name="sim" accept="image/*" id="sim">
+                            </div>
+                            <div class=" form-group " id="formKK">
+                                <label for="">KK/NPWP Pelanggan</label>
+                                <input type="file" class="form-control" name="kk" accept="image/*" id="kk">
+                            </div>
                             <div class="row" id="tampil_form">
                                 
                             </div>
@@ -207,4 +210,48 @@ input:checked + .slider:before {
             </div>
         </div>
     </div>
+    <script>
+        $('#formKTP').css('display','none');
+    $('#formSIM').css('display','none');
+    $('#formKK').css('display','none');
+        $(document).on('change','#paket_id',function(){
+            $.ajax({
+            
+            type:'POST',
+            url:'<?= base_url('transaksi/checkingPackage') ?>',
+            data:{id:$(this).val()},
+            dataType:'json',
+            success:function(resp){
+                if(resp.status == true){
+                    if(resp.arr.ktp == 'y'){
+                        $('#formKTP').css('display','');
+                        $('#ktp').attr('required',true);
+                    }else{
+                        $('#formKTP').css('display','none');
+                        $('#ktp').attr('required',false);
+                    }
+
+                    if(resp.arr.sim == 'y'){
+                        $('#formSIM').css('display','');
+                        $('#sim').attr('required',true);
+                    }else{
+                        $('#formSIM').css('display','none');
+                        $('#sim').attr('required',false);
+                    }
+
+                    if(resp.arr.kk == 'y'){
+                        $('#formKK').css('display','');
+                        $('#kk').attr('required',true);
+                    }else{
+                        $('#formKK').css('display','none');
+                        $('#kk').attr('required',false);
+                    }
+                }else{
+                    swal('Peringatan',resp.msg,'warning');
+
+                }
+            }
+        })
+        })
+    </script>
     <!-- Contact End -->

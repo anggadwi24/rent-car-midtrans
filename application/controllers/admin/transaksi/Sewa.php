@@ -279,9 +279,10 @@ class Sewa extends CI_Controller
         if($cek->num_rows() > 0){
             $row = $cek->row_array();
             if($row['trans_status'] == 'paid' OR $row['trans_status'] == 'waiting' ){
-                if($row['trans_status'] == 'paid'){
-                    $this->model_app->update('cr_mobil',array('mobil_available'=>'y'),array('mobil_id'=>$row['trans_mobil_id']));
-                }
+                $mobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$row['trans_mobil_id']))->row_array();
+                $qty = $mobil['mobil_qty']+1;
+                $this->model_app->update('cr_mobil',array('mobil_available'=>'y','mobil_qty'=>$qty),array('mobil_id'=>$row['trans_mobil_id']));
+               
                 $this->model_app->update('cr_transaksi',array('trans_status'=>'cancel','trans_return'=>'y'),array('trans_no'=>$no));
                 $this->session->set_flashdata('success','Transaksi Berhasil dibatalkan');
                 redirect('admin/transaksi/sewa/detail?no='.$no);
@@ -301,9 +302,10 @@ class Sewa extends CI_Controller
         if($cek->num_rows() > 0){
             $row = $cek->row_array();
             if($row['trans_status'] == 'paid' ){
-                if($row['trans_status'] == 'paid'){
-                    $this->model_app->update('cr_mobil',array('mobil_available'=>'y'),array('mobil_id'=>$row['trans_mobil_id']));
-                }
+                $mobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$row['trans_mobil_id']))->row_array();
+                $qty = $mobil['mobil_qty']+1;
+                $this->model_app->update('cr_mobil',array('mobil_available'=>'y','mobil_qty'=>$qty),array('mobil_id'=>$row['trans_mobil_id']));
+                
                 $this->model_app->update('cr_transaksi',array('trans_status'=>'done','trans_return'=>'y'),array('trans_no'=>$no));
                 $this->session->set_flashdata('success','Transaksi Berhasil diselesaikan');
                 redirect('admin/transaksi/sewa/detail?no='.$no);
@@ -329,11 +331,28 @@ class Sewa extends CI_Controller
             pushEmail($row['trans_cus_email'],$title,$html);
         }
     }
+    function checkingPackage(){
+        if($this->input->method() == 'post'){
+            $id = $this->input->post('id');
+            $arr = null;
+            $cek = $this->model_app->view_where('cr_package',array('pack_id'=>$id));
+            if($cek->num_rows()> 0){
+                $status = true;
+                $msg = null;
+                $row = $cek->row_array();
+                $arr = array('ktp'=>$row['pack_ktp'],'sim'=>$row['pack_sim'],'kk'=>$row['pack_kk']);
+            }else{
+                $status = false;
+                $msg = 'Paket tidak ditemukan';
+            }
+            echo json_encode(array('status'=>$status,'msg'=>$msg,'arr'=>$arr));
+        }
+	}
     function mobil(){
         $msg = null;
         $output = null;
         $id = $this->input->post('id');
-        $data=  $this->model_app->view_where_ordering('cr_mobil',array('mobil_merk'=>$id,'mobil_available'=>'y'),'mobil_name','ASC');
+        $data=  $this->model_app->view_where_ordering('cr_mobil',array('mobil_merk'=>$id,'mobil_available'=>'y','mobil_qty >= '=>0),'mobil_name','ASC');
         if($data->num_rows() > 0){
             $status = true;
             $output .= "<option disabled selected>Pilih Mobil</option>";

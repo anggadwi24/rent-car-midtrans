@@ -16,7 +16,7 @@
                         <th>Merk</th>
                         <th>Trasmisi</th>
                         <th>Bahan Bakar</th>
-                        <th>qty</th>
+                        <th>Qty</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
@@ -32,12 +32,12 @@
                     </tr>
                 </tfoot> -->
                 <tbody>
-                    <?php foreach($mobil->result_array() as $mbl){ ?>
+                    <?php if($mobil->num_rows() > 0){ foreach($mobil->result_array() as $mbl){ ?>
                     <tr>
                         <td><?= $mbl['mobil_name'] ?></td>
                         <td>
-                            <?php $merk=$this->model_app->view_where('cr_merk',array('merk_id'=>$mbl['mobil_merk']))->row_array(); ?>
-                            <?= $merk['merk_name'] ?>
+                            <!-- <?php $merk=$this->model_app->view_where('cr_merk',array('merk_id'=>$mbl['mobil_merk']))->row_array(); ?> -->
+                            <?= $mbl['merk_name'] ?>
                         </td>
                         <td><?= $mbl['mobil_transmisi'] ?></td>
                         <td><?= $mbl['mobil_fuel'] ?></td>
@@ -56,7 +56,7 @@
                             <?php }?>
                         </td>
                     </tr>
-                    <?php } ?>
+                    <?php } }?>
                 </tbody>
             </table>
         </div>

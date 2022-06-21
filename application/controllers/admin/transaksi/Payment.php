@@ -32,7 +32,7 @@ class Payment extends CI_Controller
             $cekMobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$mobil));
             if($cekMobil->num_rows() > 0 ){
                 $rowM = $cekMobil->row_array();
-                if($rowM['mobil_available'] == 'y'){
+                if($rowM['mobil_available'] == 'y' AND $rowM['mobil_qty'] > 0){
                     $cekPackage = $this->model_app->view_where('cr_package',array('pack_id'=>$pack,'pack_mobil_id'=>$mobil));
                     if($cekPackage->num_rows() > 0){
                         
@@ -40,7 +40,73 @@ class Payment extends CI_Controller
                         $day = daysDifference($sDate,$eDate);
                         $price = $day*$rowP['pack_price'];
                        
-                        
+                      
+                        if($rowP['pack_ktp'] == 'y'){
+                            $config1['upload_path']     = './upload/transaksi/';
+                            $config1['encrypt_name'] 	= TRUE;
+                            $config1['allowed_types']   = 'gif|jpg|png|jpeg';
+                            $config1['max_size']        = 5000;
+                                
+                                    
+                            $this->load->library('upload', $config1,'ktp');
+                            $this->ktp->initialize($config1);
+                            if(!$this->ktp->do_upload('ktp')){
+                                $msg .= str_replace(array('<p>','</p>'),'',$this->upload->display_errors());
+                                $status = false;
+                            }else{
+                                 $upload_data1 = $this->ktp->data();
+                                 $ktp = $upload_data1['file_name'];
+                                 $status = true;
+                            }
+                        }else{
+                            $status = true;
+                            $ktp = null;
+                        }
+
+                        if($rowP['pack_sim'] == 'y'){
+                            $config1['upload_path']     = './upload/transaksi/';
+                            $config1['encrypt_name'] 	= TRUE;
+                            $config1['allowed_types']   = 'gif|jpg|png|jpeg';
+                            $config1['max_size']        = 5000;
+                                
+                                    
+                            $this->load->library('upload', $config1,'sim');
+                            $this->sim->initialize($config1);
+                            if(!$this->sim->do_upload('sim')){
+                                $msg .= str_replace(array('<p>','</p>'),'',$this->upload->display_errors());
+                                $status = false;
+                            }else{
+                                 $upload_data2 = $this->sim->data();
+                                 $sim = $upload_data2['file_name'];
+                                 $status = true;
+                            }
+                        }else{
+                            $status = true;
+                            $sim = null;
+                        }
+
+                        if($rowP['pack_kk'] == 'y'){
+                            $config1['upload_path']     = './upload/transaksi/';
+                            $config1['encrypt_name'] 	= TRUE;
+                            $config1['allowed_types']   = 'gif|jpg|png|jpeg';
+                            $config1['max_size']        = 5000;
+                                
+                                    
+                            $this->load->library('upload', $config1,'kk');
+                            $this->kk->initialize($config1);
+                            if(!$this->kk->do_upload('kk')){
+                                $msg .= str_replace(array('<p>','</p>'),'',$this->upload->display_errors());
+                                $status = false;
+                            }else{
+                                 $upload_data2 = $this->kk->data();
+                                 $kk = $upload_data2['file_name'];
+                                 $status = true;
+                            }
+                        }else{
+                            $status = true;
+                            $kk = null;
+                        }
+
 
                             
                        
@@ -104,12 +170,19 @@ class Payment extends CI_Controller
                                 $data = array('trans_no'=>$trans_no,'trans_cus_name'=>$nama,'trans_cus_email'=>$email,
                                           'trans_cus_phone'=>$phone,'trans_cus_id'=>$customer,'trans_date_start'=>$sDate,'trans_pack_id'=>$pack,
                                           'trans_date_end'=>$eDate,'trans_time'=>$time,'trans_mobil_id'=>$mobil,'trans_sp_id'=>$shuttlePrice,
-                                          'trans_address'=>$address,'trans_total'=>$amount,'trans_status'=>$con,
+                                          'trans_address'=>$address,'trans_total'=>$amount,'trans_status'=>$con,'trans_cus_ktp'=>$ktp,'trans_cus_sim'=>$sim,'trans_cus_kk'=>$kk,
                                           'trans_by'=>$this->session->userdata['login_admin']['users_level'],'trans_date'=>date('Y-m-d H:i:s'),
 
                                         );
+                                
                                 $this->model_app->insert('cr_transaksi',$data);
-                               
+                                $qty = $rowM['mobil_qty']-1;
+                                if($qty == 0){
+                                    $keter = 'n';
+                                }else{
+                                    $keter = 'y';
+                                }
+                                $this->model_app->update('cr_mobil',array('mobil_qty'=>$qty,'mobil_available'=>$keter),array('mobil_id'=>$mobil));
                                 $status = true;
                                 $packageName = $rowM['mobil_name']. ' - '.$rowP['pack_name'].' x'.$day.'D';
                                 $transaction_details = array(
@@ -170,14 +243,20 @@ class Payment extends CI_Controller
                                 $payment = false;
                                 $con = 'paid';
                                 $data = array('trans_no'=>$trans_no,'trans_cus_name'=>$nama,'trans_cus_email'=>$email,
-                                'trans_cus_phone'=>$phone,'trans_cus_id'=>$customer,'trans_date_start'=>$sDate,
+                                'trans_cus_phone'=>$phone,'trans_cus_id'=>$customer,'trans_date_start'=>$sDate,'trans_cus_ktp'=>$ktp,'trans_cus_sim'=>$sim,'trans_cus_kk'=>$kk,
                                 'trans_date_end'=>$eDate,'trans_time'=>$time,'trans_mobil_id'=>$mobil,'trans_sp_id'=>$shuttlePrice,'trans_pack_id'=>$pack,
                                 'trans_address'=>$address,'trans_total'=>$amount,'trans_status'=>$con,
                                 'trans_by'=>$this->session->userdata['login_admin']['users_level'],'trans_date'=>date('Y-m-d H:i:s'),
 
                               );
                                  $this->model_app->insert('cr_transaksi',$data);
-                                 $this->model_app->update('cr_mobil',array('mobil_available'=>'n'),array('mobil_id'=>$mobil));
+                                $qty = $rowM['mobil_qty']-1;
+                                if($qty == 0){
+                                    $keter = 'n';
+                                }else{
+                                    $keter = 'y';
+                                }
+                                 $this->model_app->update('cr_mobil',array('mobil_available'=>$keter,'mobil_qty'=>$qty),array('mobil_id'=>$mobil));
                                  $dataPaym = array('pay_trans_no'=>$trans_no,'pay_method'=>'CASH','pay_amount'=>$amount,'pay_date'=>date('Y-m-d H:i:s'));
                                  $this->model_app->insert('cr_payment',$dataPaym);
                                  $status = true; 

@@ -16,29 +16,49 @@
           <form action="<?= base_url('admin/master/paket/paket_add') ?>" method="post">
           <div class="modal-body">
 
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label>Nama Paket</label>
-                      <input type="text" class="form-control" name="pack_name">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label>Mobil</label>
-                      <select class="form-control" name="pack_mobil_id">
-                        <option disabled selected>Pilih Mobil...</option>
-                         <?php foreach($mobil->result_array() as $mbl){?>
-                        <option value="<?= $mbl['mobil_id'] ?>"><?= $mbl['mobil_name'] ?> - (<?= $mbl['mobil_transmisi'] ?>)</option>
-                        <?php } ?>
-                      </select>
-                    </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Nama Paket</label>
+                  <input type="text" class="form-control" name="pack_name">
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Mobil</label>
+                  <select class="form-control" name="pack_mobil_id">
+                    <option disabled selected>Pilih Mobil...</option>
+                      <?php foreach($mobil->result_array() as $mbl){?>
+                    <option value="<?= $mbl['mobil_id'] ?>"><?= $mbl['mobil_name'] ?> - (<?= $mbl['mobil_transmisi'] ?>)</option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Deskripsi</label>
+                <textarea class="form-control" name="pack_desc"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Harga</label>
+                  <input type="text" class="form-control" name="pack_price">
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4 ">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="ktpLbl" value="y" name="ktp">
+                    <label class="form-check-label" for="ktpLbl">Perlu KTP</label>
                   </div>
-                  <div class="form-group">
-                    <label>Deskripsi</label>
-                    <textarea class="form-control" name="pack_desc"></textarea>
+                </div>
+                <div class="form-group col-md-4 ">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="simLbl" value="y" name="sim">
+                    <label class="form-check-label" for="simLbl">Perlu SIM</label>
                   </div>
-                  <div class="form-group">
-                    <label>Harga</label>
-                      <input type="text" class="form-control" name="pack_price">
+                </div>
+                <div class="form-group col-md-4 ">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="kkLbl" value="y" name="kk">
+                    <label class="form-check-label" for="kkLbl">Perlu KK/NPWP</label>
                   </div>
+                </div>
+              </div>
                   
           </div>
           <div class="modal-footer">
@@ -83,12 +103,16 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    <?php foreach($paket->result_array() as $pkt){ 
-                    $mobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$pkt['pack_mobil_id']))->row_array();
+                    <?php 
+                    if($paket->num_rows() > 0){
+
+                    
+                    foreach($paket->result_array() as $pkt){ 
+                    // $mobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$pkt['pack_mobil_id']))->row_array();
                     ?>
                     <tr>
-                        <td><?= $mobil['mobil_name'] ?></td>
-                        <td><?= $mobil['mobil_transmisi'] ?></td>
+                        <td><?= $pkt['mobil_name'] ?></td>
+                        <td><?= $pkt['mobil_transmisi'] ?></td>
                         <td><?= $pkt['pack_name'] ?></td>
                         <td>Rp<?= number_format($pkt['pack_price'], 0, ",", ".") ?></td>
                         <td>
@@ -135,6 +159,26 @@
                                             <label>Harga</label>
                                               <input type="text" class="form-control" name="pack_price" value="<?= $pkt['pack_price'] ?>">
                                           </div>
+                                          <div class="form-row">
+                                              <div class="form-group col-md-4 ">
+                                                <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="checkbox" id="ktpLbl" value="y" name="ktp" <?php if($pkt['pack_ktp'] == 'y'){ echo "checked";}?>>
+                                                  <label class="form-check-label" for="ktpLbl">Perlu KTP</label>
+                                                </div>
+                                              </div>
+                                              <div class="form-group col-md-4 ">
+                                                <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="checkbox" id="simLbl" value="y" name="sim" <?php if($pkt['pack_sim'] == 'y'){ echo "checked";}?>>
+                                                  <label class="form-check-label" for="simLbl">Perlu SIM</label>
+                                                </div>
+                                              </div>
+                                              <div class="form-group col-md-4 ">
+                                                <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="checkbox" id="kkLbl" value="y" name="kk" <?php if($pkt['pack_kk'] == 'y'){ echo "checked";}?>>
+                                                  <label class="form-check-label" for="kkLbl">Perlu KK/NPWP</label>
+                                                </div>
+                                              </div>
+                                            </div>
                                           
                                   </div>
                                   <div class="modal-footer">
@@ -151,7 +195,7 @@
                           <?php }?>
                         </td>
                     </tr>
-                    <?php } ?>
+                    <?php } }?>
                 </tbody>
             </table>
         </div>

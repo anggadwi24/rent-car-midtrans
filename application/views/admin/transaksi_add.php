@@ -77,11 +77,11 @@ input:checked + .slider:before {
     
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 mb-2">
         <div class="card shadow ">
-            <div class="card-header"><h5 class="card-title">Data Customer</h5></div>
+            <div class="card-header"><h5 class="card-title">Data Pelanggan</h5></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 form-group">
-                        <label for="">Customer</label>
+                        <label for="">Pelanggan</label>
                         <select name="customer" id="customer" class="form-control" requried>
                             <option value='no'>Tidak Memiliki Akun</option>
                             <?php 
@@ -94,17 +94,18 @@ input:checked + .slider:before {
                         </select>
                     </div>
                     <div class="col-12 form-group">
-                        <label for="">Nama Customer</label>
+                        <label for="">Nama Pelanggan</label>
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="col-12 form-group">
-                        <label for="">Email Customer</label>
+                        <label for="">Email Pelanggan</label>
                         <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="col-12 form-group">
-                        <label for="">Phone Customer</label>
+                        <label for="">Phone Pelanggan</label>
                         <input type="text" class="form-control" id="phone" name="phone" required>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -184,6 +185,18 @@ input:checked + .slider:before {
                         <label for="">Alamat Antar / Jemput</label>
                         <textarea name="address" id="alamat" class="form-control" cols="5" rows="5"></textarea>
                     </div>
+                    <div class="col-12 form-group " id="formKTP">
+                        <label for="">KTP Pelanggan</label>
+                        <input type="file" class="form-control" name="ktp" accept="image/*" id="ktp">
+                    </div>
+                    <div class="col-12 form-group " id="formSIM">
+                        <label for="">SIM A Pelanggan</label>
+                        <input type="file" class="form-control" name="sim" accept="image/*" id="sim">
+                    </div>
+                    <div class="col-12 form-group " id="formKK">
+                        <label for="">KK/NPWP Pelanggan</label>
+                        <input type="file" class="form-control" name="kk" accept="image/*" id="kk">
+                    </div>
                     <div class="col-12 form-group">
                         <button class="btn btn-primary float-right btn-xs" id="btnProcess" type="button">Proses</button>
                     </div>
@@ -203,6 +216,11 @@ input:checked + .slider:before {
 </div>
 </form>
 <script>
+    $('#formKTP').css('display','none');
+    $('#formSIM').css('display','none');
+    $('#formKK').css('display','none');
+
+
     $("#formAct").validate({
                     
         rules: {
@@ -293,7 +311,7 @@ input:checked + .slider:before {
                         window.open(resp.msg, '_blank');
                         window.location = resp.redirect;
                     }else{
-                        alert(resp.msg);
+                       swal('Berhasil',resp.msg);
                         window.location = resp.redirect;
                     
                     }
@@ -344,6 +362,45 @@ input:checked + .slider:before {
             success:function(resp){
                 if(resp.status == true){
                     $('#package').html(resp.output)
+                }else{
+                    swal('Peringatan',resp.msg,'warning');
+
+                }
+            }
+        })
+    })
+    $(document).on('change','#package',function(){
+        $.ajax({
+            
+            type:'POST',
+            url:'<?= base_url('admin/transaksi/sewa/checkingPackage') ?>',
+            data:{id:$(this).val()},
+            dataType:'json',
+            success:function(resp){
+                if(resp.status == true){
+                    if(resp.arr.ktp == 'y'){
+                        $('#formKTP').css('display','');
+                        $('#ktp').attr('required',true);
+                    }else{
+                        $('#formKTP').css('display','none');
+                        $('#ktp').attr('required',false);
+                    }
+
+                    if(resp.arr.sim == 'y'){
+                        $('#formSIM').css('display','');
+                        $('#sim').attr('required',true);
+                    }else{
+                        $('#formSIM').css('display','none');
+                        $('#sim').attr('required',false);
+                    }
+
+                    if(resp.arr.kk == 'y'){
+                        $('#formKK').css('display','');
+                        $('#kk').attr('required',true);
+                    }else{
+                        $('#formKK').css('display','none');
+                        $('#kk').attr('required',false);
+                    }
                 }else{
                     swal('Peringatan',resp.msg,'warning');
 

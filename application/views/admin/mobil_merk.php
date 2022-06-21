@@ -49,7 +49,9 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach($merk->result_array() as $mrk){ ?>
+            <?php 
+            if($merk->num_rows() > 0){
+              foreach($merk->result_array() as $mrk){ ?>
             <tr>
               <td><?= $mrk['merk_name'] ?></td>
               <td>
@@ -88,7 +90,7 @@
                     <?php }?>
               </td>
             </tr>
-            <?php } ?>
+            <?php }} ?>
           </tbody>
         </table>
 

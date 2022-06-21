@@ -56,7 +56,7 @@ class Notifications extends CI_Controller {
                     $row = $cek->row_array();
                     if($row['trans_status'] == 'waiting'){
                         $this->model_app->update('cr_transaksi',array('trans_status'=>'paid'),array('trans_no'=>$invoice));
-                        $this->model_app->update('cr_mobil',array('mobil_available'=>'n'),array('mobil_id'=>$row['trans_mobil_id']));
+                        // $this->model_app->update('cr_mobil',array('mobil_available'=>'n'),array('mobil_id'=>$row['trans_mobil_id']));
                         $dataPaym = array('pay_trans_no'=>$invoice,'pay_method'=>$result->payment_type,'pay_amount'=>$result->gross_amount,'pay_date'=>date('Y-m-d H:i:s'));
                         $this->model_app->insert('cr_payment',$dataPaym);
 						$data['row'] = $row;

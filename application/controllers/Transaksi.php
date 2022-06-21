@@ -33,6 +33,23 @@ class Transaksi extends CI_Controller
         echo $html;
 	}
 
+    function checkingPackage(){
+        if($this->input->method() == 'post'){
+            $id = $this->input->post('id');
+            $arr = null;
+            $cek = $this->model_app->view_where('cr_package',array('pack_id'=>$id));
+            if($cek->num_rows()> 0){
+                $status = true;
+                $msg = null;
+                $row = $cek->row_array();
+                $arr = array('ktp'=>$row['pack_ktp'],'sim'=>$row['pack_sim'],'kk'=>$row['pack_kk']);
+            }else{
+                $status = false;
+                $msg = 'Paket tidak ditemukan';
+            }
+            echo json_encode(array('status'=>$status,'msg'=>$msg,'arr'=>$arr));
+        }
+	}
 	public function form_delivery()
 	{
 		$kab = $this->model_app->view_where_ordering('cr_kabupaten',array('kab_prov_id'=>51),'kab_name','ASC');
@@ -170,20 +187,20 @@ class Transaksi extends CI_Controller
 
 	public function booking_add()
 	{
-		$config1['upload_path']     = './upload/user/';
+		$config1['upload_path']     = './upload/transaksi/';
 		$config1['encrypt_name'] 	= TRUE;
 		$config1['allowed_types']   = 'gif|jpg|png|jpeg';
-		$config1['max_size']        = 1000;
+		$config1['max_size']        = 5000;
 			
 				
 		$this->load->library('upload', $config1,'ktp');
 		$this->ktp->initialize($config1);
 
 		
-		$config2['upload_path']     = './upload/user/';
+		$config2['upload_path']     = './upload/transaksi/';
 		$config2['encrypt_name'] 	= TRUE;
 		$config2['allowed_types']   = 'gif|jpg|png|jpeg';
-		$config2['max_size']        = 1000;
+		$config2['max_size']        = 5000;
 			
 				
 		$this->load->library('upload', $config2,'sim');
@@ -239,41 +256,122 @@ class Transaksi extends CI_Controller
 	        }
 			$hari = daysDifference($trans_date_start,$trans_date_end);
 			
-	        $harga_paket = $this->model_app->view_where('cr_package',array('pack_id'=>$trans_pack_id))->row_array();
-	        $trans_total = $harga_paket['pack_price'];
-			$price = ($hari*$trans_total)+$harga_anjen;
-	        $trans_no = $this->model_app->generateInvoice();
-	        $data = array(
-	        	'trans_no'			=> $trans_no,
-	            'trans_cus_name' 	=> $trans_cus_name,
-	            'trans_cus_id' 		=> $trans_cus_id,
-	            'trans_cus_phone' 	=> $trans_cus_phone,
-	            'trans_cus_email' 	=> $trans_cus_email,
-	            'trans_cus_ktp' 	=> $trans_cus_ktp,
-	            'trans_cus_sim' 	=> $trans_cus_sim,
-	            'trans_date_start' 	=> $trans_date_start,
-	            'trans_date_end' 	=> $trans_date_end,
-	            'trans_time' 		=> $trans_time,
-	            'trans_mobil_id' 	=> $trans_mobil_id,
-	            'trans_pack_id' 	=> $trans_pack_id,
-	            'trans_sp_id' 		=> $trans_sp_id,
-	            'trans_address' 	=> $trans_address,
-	            'trans_total' 		=> $price,
-	            'trans_status' 		=> 'waiting',
-	            'trans_by' 			=> 'customer',
-	            'trans_return' 		=> 'n',
-	            'trans_date' 		=> date('Y-m-d H:i:s')
-	        );
+	        $paket = $this->model_app->view_where('cr_package',array('pack_id'=>$trans_pack_id));
+			$msg = null;
+			if($paket->num_rows() > 0){
+				$package = $paket->row_array();
+				if($package['pack_ktp'] == 'y'){
+					$config1['upload_path']     = './upload/transaksi/';
+					$config1['encrypt_name'] 	= TRUE;
+					$config1['allowed_types']   = 'gif|jpg|png|jpeg';
+					$config1['max_size']        = 5000;
+						
+							
+					$this->load->library('upload', $config1,'ktp');
+					$this->ktp->initialize($config1);
+					if(!$this->ktp->do_upload('ktp')){
+						$msg .= str_replace(array('<p>','</p>'),'',$this->upload->display_errors());
+						$status = false;
+					}else{
+						 $upload_data1 = $this->ktp->data();
+						 $ktp = $upload_data1['file_name'];
+						 $status = true;
+					}
+				}else{
+					$status = true;
+					$ktp = null;
+				}
 
-	        $this->model_app->insert('cr_transaksi',$data);
-        	
-        	$stokmobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$trans_mobil_id));
-        	if ($mobil -> num_rows()>0) {
-        		$row = $stokmobil->row_array();
-				$this->db->query("UPDATE cr_mobil set mobil_qty = mobil_qty - 1 where mobil_id = $row[mobil_id]");
-        	}else{}
-	        $this->session->set_userdata('trans_no',$trans_no);
-	        redirect('transaksi/checkout');
+				if($package['pack_sim'] == 'y'){
+					$config1['upload_path']     = './upload/transaksi/';
+					$config1['encrypt_name'] 	= TRUE;
+					$config1['allowed_types']   = 'gif|jpg|png|jpeg';
+					$config1['max_size']        = 5000;
+						
+							
+					$this->load->library('upload', $config1,'sim');
+					$this->sim->initialize($config1);
+					if(!$this->sim->do_upload('sim')){
+						$msg .= str_replace(array('<p>','</p>'),'',$this->upload->display_errors());
+						$status = false;
+					}else{
+						 $upload_data2 = $this->sim->data();
+						 $sim = $upload_data2['file_name'];
+						 $status = true;
+					}
+				}else{
+					$status = true;
+					$sim = null;
+				}
+
+				if($package['pack_kk'] == 'y'){
+					$config1['upload_path']     = './upload/transaksi/';
+					$config1['encrypt_name'] 	= TRUE;
+					$config1['allowed_types']   = 'gif|jpg|png|jpeg';
+					$config1['max_size']        = 5000;
+						
+							
+					$this->load->library('upload', $config1,'kk');
+					$this->kk->initialize($config1);
+					if(!$this->kk->do_upload('kk')){
+						$msg .= str_replace(array('<p>','</p>'),'',$this->upload->display_errors());
+						$status = false;
+					}else{
+						 $upload_data2 = $this->kk->data();
+						 $kk = $upload_data2['file_name'];
+						 $status = true;
+					}
+				}else{
+					$status = true;
+					$kk = null;
+				}
+				if($status == true){
+					$trans_total = $package['pack_price'];
+					$price = ($hari*$trans_total)+$harga_anjen;
+					$trans_no = $this->model_app->generateInvoice();
+					$data = array(
+						'trans_no'			=> $trans_no,
+						'trans_cus_name' 	=> $trans_cus_name,
+						'trans_cus_id' 		=> $trans_cus_id,
+						'trans_cus_phone' 	=> $trans_cus_phone,
+						'trans_cus_email' 	=> $trans_cus_email,
+						'trans_cus_ktp' 	=> $ktp,
+						'trans_cus_sim' 	=> $sim,
+						'trans_cus_kk'		=> $kk,
+						'trans_date_start' 	=> $trans_date_start,
+						'trans_date_end' 	=> $trans_date_end,
+						'trans_time' 		=> $trans_time,
+						'trans_mobil_id' 	=> $trans_mobil_id,
+						'trans_pack_id' 	=> $trans_pack_id,
+						'trans_sp_id' 		=> $trans_sp_id,
+						'trans_address' 	=> $trans_address,
+						'trans_total' 		=> $price,
+						'trans_status' 		=> 'waiting',
+						'trans_by' 			=> 'customer',
+						'trans_return' 		=> 'n',
+						'trans_date' 		=> date('Y-m-d H:i:s')
+					);
+
+					$this->model_app->insert('cr_transaksi',$data);
+					
+					$stokmobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$trans_mobil_id));
+					if ($mobil -> num_rows()>0) {
+						$row = $stokmobil->row_array();
+						$this->db->query("UPDATE cr_mobil set mobil_qty = mobil_qty - 1 where mobil_id = $row[mobil_id]");
+					}
+					$this->session->set_userdata('trans_no',$trans_no);
+					redirect('transaksi/checkout');
+				}else{
+					$this->session->set_flashdata('error',$msg);
+        			redirect('transaksi/booking');
+				}
+				
+			}else{
+				$this->session->set_flashdata('error','Paket tidak ditemukan!');
+        		redirect('transaksi/booking');
+			}
+
+	        
 	        
         }else{
         	$this->session->set_flashdata('error','Mobil tidak ditemukan!');

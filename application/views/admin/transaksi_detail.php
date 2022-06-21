@@ -63,6 +63,72 @@
             </div>
             <?php } ?>
         </div>
+        <?php if($row['trans_status'] == 'done' OR $row['trans_status'] == 'paid'){?>
+            <?php if($row['trans_cus_ktp'] != NULL){?>
+                <div class="card shadow mt-3">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <h6 class="card-title mt-1">Foto KTP Pelanggan</h6>
+                    </div>
+                    <div class="card-body collapse" id="collapseOne">
+                        <div class="row">
+                            <div class="col-12 text-center mx-auto">
+                                <?php if(file_exists('upload/transaksi/'.$row['trans_cus_ktp'])){
+                                    echo "<img src='".base_url('upload/transaksi/').$row['trans_cus_ktp']."' class='img-fluid'>";
+                                    }else{
+                                        echo "<h6>Gambar tidak ditemukan</h6>";
+                                    }
+                                
+                                ?>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+            <?php }?>
+            <?php if($row['trans_cus_sim'] != NULL){?>
+                <div class="card shadow mt-3">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseTwoo" aria-expanded="false" aria-controls="collapseTwoo">
+                        <h6 class="card-title mt-1">Foto SIM A Pelanggan</h6>
+                    </div>
+                    <div class="card-body collapse" id="collapseTwoo">
+                        <div class="row">
+                            <div class="col-12 text-center mx-auto">
+                                <?php if(file_exists('upload/transaksi/'.$row['trans_cus_sim'])){
+                                    echo "<img src='".base_url('upload/transaksi/').$row['trans_cus_sim']."' class='img-fluid'>";
+                                    }else{
+                                        echo "<h6>Gambar tidak ditemukan</h6>";
+                                    }
+                                
+                                ?>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+            <?php }?>
+            <?php if($row['trans_cus_kk'] != NULL){?>
+                <div class="card shadow mt-3">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <h6 class="card-title mt-1">Foto KK/NPWP Pelanggan</h6>
+                    </div>
+                    <div class="card-body collapse " id="collapseThree">
+                        <div class="row">
+                            <div class="col-12 text-center mx-auto">
+                                <?php if(file_exists('upload/transaksi/'.$row['trans_cus_kk'])){
+                                    echo "<img src='".base_url('upload/transaksi/').$row['trans_cus_kk']."' class='img-fluid'>";
+                                    }else{
+                                        echo "<h6>Gambar tidak ditemukan</h6>";
+                                    }
+                                
+                                ?>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+            <?php }?>
+        <?php }?>
+        
     </div>
     <div class="col-lg-8 col-sm-12">
         <div class="card shadow">

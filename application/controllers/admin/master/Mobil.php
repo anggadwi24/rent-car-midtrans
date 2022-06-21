@@ -81,7 +81,9 @@ class Mobil extends CI_Controller
     //jenis mobil start
     public function jenis_mobil()
     {
-        $data['mobil'] = $this->model_app->view('cr_mobil');
+        // $data['mobil'] = $this->model_app->view('cr_mobil');
+        $data['mobil'] = $this->model_app->join_order2('cr_mobil','cr_merk','mobil_merk','merk_id','mobil_id','DESC');
+
         $this->template->load('template_admin','admin/mobil_jenis',$data);
     }
 

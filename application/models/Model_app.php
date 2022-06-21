@@ -141,6 +141,14 @@ class Model_app extends CI_model{
         $this->db->order_by($order,$ordering);
         return $this->db->get();
     }
+    public function join_order2($table1,$table2,$field1,$field2,$order,$ordering){
+        $this->db->select('*');
+        $this->db->from($table1);
+        $this->db->join($table2, $table1.'.'.$field1.'='.$table2.'.'.$field2);
+     
+        $this->db->order_by($order,$ordering);
+        return $this->db->get();
+    }
     public function view_left_join_where($table1,$table2,$field,$where,$order,$ordering){
         $this->db->select('*');
         $this->db->from($table1);
