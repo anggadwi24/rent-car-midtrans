@@ -15,17 +15,20 @@
     <div class="container-fluid">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mb-5">
+                <div class="col-lg-12 mb-5">
                     <h1 class="display-4 text-uppercase mb-5 text-primary"><?= $mobil['mobil_name'] ?></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mb-5">
                     <div class="row mx-n2 mb-3">
                         <?php $gambar = $this->model_app->view_where('cr_mobil_gallery',array('mgal_mobil_id'=>$mobil['mobil_id']));
                         foreach ($gambar->result_array() as $gmbr) {?>
-                        <div class="col-md-4 col-6 px-2 pb-2">
+                        <div class="col-md-6 col-6 px-2 pb-2">
                             <img class="img-fluid w-100" src="<?= base_url('upload/mobil/'.$gmbr['mgal_url']) ?>" alt="<?= $gmbr['mgal_filename'] ?>">
                         </div>
                         <?php } ?>
                     </div>
-                    <p><?= $mobil['mobil_desc'] ?></p>
                     
                </div>
 
@@ -44,6 +47,21 @@
                                 </span>
                             </div>
                             <div class="col-md-6 col-6 mb-2">
+                                <i class="fa fa-car text-primary mr-2"></i>
+                                <span><?= $mobil['mobil_seat'] ?> Orang</span>
+                            </div>
+                            <div class="col-md-6 col-6 mb-2">
+                                <i class="fa fa-car text-primary mr-2"></i>
+                                <span><?= $mobil['mobil_color'] ?></span>
+                            </div>
+                            <div class="col-md-6 col-6 mb-2">
+                                <i class="fa fa-car text-primary mr-2"></i>
+                                <span>
+                                    <?php $merk = $this->model_app->view_where('cr_merk',array('merk_id'=>$mobil['mobil_merk']))->row_array();
+                                    echo $merk['merk_name']; ?>
+                                </span>
+                            </div>
+                            <div class="col-md-6 col-6 mb-2">
                                 <i class="fa fa-cogs text-primary mr-2"></i>
                                 <span><?= $mobil['mobil_transmisi'] ?></span>
                             </div>
@@ -52,12 +70,10 @@
                                 <span><?= $mobil['mobil_fuel'] ?></span>
                             </div>
                             <div class="col-md-6 col-6 mb-2">
-                                <i class="fa fa-circle text-primary mr-2"></i>
-                                <span>
-                                    <?php $merk = $this->model_app->view_where('cr_merk',array('merk_id'=>$mobil['mobil_merk']))->row_array();
-                                    echo $merk['merk_name']; ?>
-                                </span>
+                                <i class="fa fa-calendar text-primary mr-2"></i>
+                                <span><?= $mobil['mobil_year'] ?></span>
                             </div>
+                            <div class="col-md-12 col-12 mb-2"></div>
                             <div class="col-md-12 col-12 mb-2">
                                 <i class="fa fa-car text-primary mr-2"></i>
                                 <span>Stok Ketersediaan Mobil : <?= $mobil['mobil_qty'] ?></span>
@@ -71,10 +87,17 @@
                         <?php }?>
                     </div>
                 </div>
+                <div class="col-lg-12 mb-5">
+                    <p style="background: #aa1801; color: white; padding:8px" align="center">Deskripsi</p>
+                    <p><?= $mobil['mobil_desc'] ?></p>
+                </div>
+
             </div>
         </div>
     </div>
     <!-- Detail End -->
+
+    <hr width="70%">
 
      <!-- Related Car Start -->
     <div class="container-fluid pb-5">

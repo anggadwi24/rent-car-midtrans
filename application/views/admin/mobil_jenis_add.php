@@ -53,6 +53,20 @@
             </div>
           </div>
           <div class="form-row">
+            <div class="form-group col-md-4">
+              <label>Warna</label>
+              <input type="text" class="form-control" name="mobil_color">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Tahun</label>
+              <input type="text" class="form-control" name="mobil_year">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Jumlah Kursi</label>
+              <input type="text" class="form-control" name="mobil_seat">
+            </div>
+          </div>
+          <div class="form-row">
             <div class="form-group col-md-6">
               <label>Gambar Utama</label>
               <input type="file" class="form-control" required="" name="file"  accept="image/*"/>

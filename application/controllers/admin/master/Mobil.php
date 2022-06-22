@@ -108,6 +108,9 @@ class Mobil extends CI_Controller
         $mobil_merk     = $this->input->post('mobil_merk');
         $mobil_desc     = $this->input->post('mobil_desc');
         $mobil_fuel     = $this->input->post('mobil_fuel');
+        $mobil_year     = $this->input->post('mobil_year');
+        $mobil_color    = $this->input->post('mobil_color');
+        $mobil_seat     = $this->input->post('mobil_seat');
         $mobil_transmisi = $this->input->post('mobil_transmisi');
         $mobil_avaliable = $this->input->post('mobil_avaliable');
         $mobil_qty      = $this->input->post('mobil_qty');
@@ -118,6 +121,9 @@ class Mobil extends CI_Controller
             'mobil_merk'        => $mobil_merk,
             'mobil_desc'        => $mobil_desc,
             'mobil_fuel'        => $mobil_fuel,
+            'mobil_color'       => $mobil_color,
+            'mobil_year'        => $mobil_year,
+            'mobil_seat'        => $mobil_seat,
             'mobil_transmisi'   => $mobil_transmisi,
             'mobil_qty'         => $mobil_qty,
             'mobil_available'   => $mobil_avaliable
@@ -211,6 +217,9 @@ class Mobil extends CI_Controller
         $mobil_merk     = $this->input->post('mobil_merk');
         $mobil_desc     = $this->input->post('mobil_desc');
         $mobil_fuel     = $this->input->post('mobil_fuel');
+        $mobil_year     = $this->input->post('mobil_year');
+        $mobil_color    = $this->input->post('mobil_color');
+        $mobil_seat     = $this->input->post('mobil_seat');
         $mobil_transmisi = $this->input->post('mobil_transmisi');
         $mobil_qty      = $this->input->post('mobil_qty');
         $mobil_avaliable = $this->input->post('mobil_avaliable');
@@ -222,6 +231,9 @@ class Mobil extends CI_Controller
                 'mobil_merk'        => $mobil_merk,
                 'mobil_desc'        => $mobil_desc,
                 'mobil_fuel'        => $mobil_fuel,
+                'mobil_color'       => $mobil_color,
+                'mobil_year'        => $mobil_year,
+                'mobil_seat'        => $mobil_seat,
                 'mobil_transmisi'   => $mobil_transmisi,
                 'mobil_qty'         => $mobil_qty,
                 'mobil_available'   => $mobil_avaliable

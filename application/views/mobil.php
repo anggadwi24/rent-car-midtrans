@@ -45,7 +45,7 @@
                             <div class="px-2">
                                 <i class="fa fa-car text-primary mr-1"></i>
                                 <span>
-                                    <?php if ($mbl['mobil_available']=='y' AND $mb['mobil_qty']>0) { 
+                                    <?php if ($mbl['mobil_available']=='y' AND $mbl['mobil_qty']>0) { 
                                         echo "Tersedia";
                                     }else{
                                         echo "Tidak Tersedia";

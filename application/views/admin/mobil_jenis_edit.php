@@ -79,6 +79,20 @@
               <input type="number" class="form-control" name="mobil_qty" value="<?= $mobil['mobil_qty'] ?>">
             </div>
             </div>
+            <div class="form-row">
+            <div class="form-group col-md-4">
+              <label>Warna</label>
+              <input type="text" class="form-control" name="mobil_color" value="<?= $mobil['mobil_color'] ?>">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Tahun</label>
+              <input type="text" class="form-control" name="mobil_year" value="<?= $mobil['mobil_year'] ?>">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Jumlah Kursi</label>
+              <input type="text" class="form-control" name="mobil_seat" value="<?= $mobil['mobil_seat'] ?>">
+            </div>
+          </div>
             <button type="submit" class="btn btn-primary kanan">Update</button>
           </form>
       </div>
