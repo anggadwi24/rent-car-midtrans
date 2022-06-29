@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 mb-2 d-none d-sm-inline-block">
-                    <div class="bg-dark d-flex flex-column justify-content-center px-5 mb-4" style="height: 315px;"></div>
+                    <img src="<?= base_url('upload/icon/bannerR.png') ?>" class="img-fluid">
                 </div>
             </div>
         </div>
