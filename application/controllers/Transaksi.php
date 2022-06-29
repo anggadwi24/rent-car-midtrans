@@ -187,33 +187,33 @@ class Transaksi extends CI_Controller
 
 	public function booking_add()
 	{
-		$config1['upload_path']     = './upload/transaksi/';
-		$config1['encrypt_name'] 	= TRUE;
-		$config1['allowed_types']   = 'gif|jpg|png|jpeg';
-		$config1['max_size']        = 5000;
+		// $config1['upload_path']     = './upload/transaksi/';
+		// $config1['encrypt_name'] 	= TRUE;
+		// $config1['allowed_types']   = 'gif|jpg|png|jpeg';
+		// $config1['max_size']        = 5000;
 			
 				
-		$this->load->library('upload', $config1,'ktp');
-		$this->ktp->initialize($config1);
+		// $this->load->library('upload', $config1,'ktp');
+		// $this->ktp->initialize($config1);
 
 		
-		$config2['upload_path']     = './upload/transaksi/';
-		$config2['encrypt_name'] 	= TRUE;
-		$config2['allowed_types']   = 'gif|jpg|png|jpeg';
-		$config2['max_size']        = 5000;
+		// $config2['upload_path']     = './upload/transaksi/';
+		// $config2['encrypt_name'] 	= TRUE;
+		// $config2['allowed_types']   = 'gif|jpg|png|jpeg';
+		// $config2['max_size']        = 5000;
 			
 				
-		$this->load->library('upload', $config2,'sim');
-		$this->sim->initialize($config2);
+		// $this->load->library('upload', $config2,'sim');
+		// $this->sim->initialize($config2);
 
-        if(!$this->ktp->do_upload('ktp') OR !$this->sim->do_upload('sim')){
-            $this->upload->display_errors();
-        }else{
-             $upload_data1 = $this->ktp->data();
-				$trans_cus_ktp = $upload_data1['file_name'];
-			$upload_data2 = $this->sim->data();
-				$trans_cus_sim = $upload_data2['file_name'];
-        }
+        // if(!$this->ktp->do_upload('ktp') OR !$this->sim->do_upload('sim')){
+        //     $this->upload->display_errors();
+        // }else{
+        //      $upload_data1 = $this->ktp->data();
+		// 		$trans_cus_ktp = $upload_data1['file_name'];
+		// 	$upload_data2 = $this->sim->data();
+		// 		$trans_cus_sim = $upload_data2['file_name'];
+        // }
 
 		$trans_cus_name 	= $this->input->post('trans_cus_name');
         $trans_cus_id 		= $this->input->post('trans_cus_id');

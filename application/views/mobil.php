@@ -39,7 +39,7 @@
                     <div class="rent-item mb-4">
                         <img class="img-fluid mb-4" src="<?= base_url('upload/mobil/'.$gd['mgal_url']) ?>" alt="<?= $gd['mgal_filename'] ?>" width="100%">
                         <h4 class="text-uppercase text-primary"><?= $mbl['mobil_name'] ?></h4>
-                        <p class="mb-2">Tersedia <?= $mbl['mobil_qty'] ?> Mobil</p>
+                        <p class="mb-2"><i class="fa fa-car text-primary"></i> Tersedia <?= $mbl['mobil_qty'] ?> Mobil</p>
 
                         <div class="d-flex justify-content-center mb-4">
                             <div class="px-2">

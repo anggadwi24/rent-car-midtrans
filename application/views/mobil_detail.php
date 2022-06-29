@@ -37,7 +37,7 @@
                         <h3 class="text-primary text-center mb-4">Detail Mobil</h3>
                         <div class="row pt-2">
                             <div class="col-md-6 col-6 mb-2">
-                                <i class="fa fa-car text-primary mr-2"></i>
+                                <i class="fa fa-check-square text-primary mr-2"></i>
                                 <span>
                                     <?php if ($mobil['mobil_available']=='y') {
                                         echo "Tersedia";
@@ -47,19 +47,12 @@
                                 </span>
                             </div>
                             <div class="col-md-6 col-6 mb-2">
-                                <i class="fa fa-car text-primary mr-2"></i>
+                                <i class="fa fa-user-circle text-primary mr-2"></i>
                                 <span><?= $mobil['mobil_seat'] ?> Orang</span>
                             </div>
                             <div class="col-md-6 col-6 mb-2">
                                 <i class="fa fa-car text-primary mr-2"></i>
                                 <span><?= $mobil['mobil_color'] ?></span>
-                            </div>
-                            <div class="col-md-6 col-6 mb-2">
-                                <i class="fa fa-car text-primary mr-2"></i>
-                                <span>
-                                    <?php $merk = $this->model_app->view_where('cr_merk',array('merk_id'=>$mobil['mobil_merk']))->row_array();
-                                    echo $merk['merk_name']; ?>
-                                </span>
                             </div>
                             <div class="col-md-6 col-6 mb-2">
                                 <i class="fa fa-cogs text-primary mr-2"></i>
@@ -75,7 +68,7 @@
                             </div>
                             <div class="col-md-12 col-12 mb-2"></div>
                             <div class="col-md-12 col-12 mb-2">
-                                <i class="fa fa-car text-primary mr-2"></i>
+                                <i class="fa fa-search text-primary mr-2"></i>
                                 <span>Stok Ketersediaan Mobil : <?= $mobil['mobil_qty'] ?></span>
                             </div>
                         </div>
