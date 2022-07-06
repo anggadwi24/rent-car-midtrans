@@ -53,7 +53,7 @@
             </div>
             <div class="form-group">
               <label>Deskripsi</label>
-              <textarea class="form-control" name="mobil_desc"><?= $mobil['mobil_desc'] ?></textarea>
+              <textarea class="form-control" name="mobil_desc" id="editor"><?= $mobil['mobil_desc'] ?></textarea>
             </div>
             <div class="form-row">
               <div class="form-group col-md-3">

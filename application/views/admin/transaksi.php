@@ -40,10 +40,10 @@
                                     $detail = null;
                                     $payment = null;
                                     if($row['trans_status'] == 'waiting' AND __thisOwner() == true){
-                                        $payment = '<a href="'.base_url('admin/transaksi/sewa/payment?no='.$row['trans_no']).'" class="btn btn-info btn-xs ml-3" title="Pembayaran"><i class="fas fa-credit-card"></i></a>';
+                                        $payment = '<a href="'.base_url('admin/transaksi/sewa/payment?no='.$row['trans_no']).'" class="btn btn-info btn-xs m-1" title="Pembayaran"><i class="fas fa-credit-card"></i></a>';
                                     }
 
-                                    $detail = '<a href="'.base_url('admin/transaksi/sewa/detail?no='.$row['trans_no']).'"  class="btn btn-success btn-xs " title="Detail"><i class="fas fa-eye"></i></i></a>';
+                                    $detail = '<a href="'.base_url('admin/transaksi/sewa/detail?no='.$row['trans_no']).'"  class="btn btn-success btn-xs m-1" title="Detail"><i class="fas fa-eye"></i></i></a>';
 
                                     echo "<tr>
                                         <td>$no</td>
@@ -53,7 +53,7 @@
                                         <td>".$mobil['mobil_name']." <small class='d-block'>".$pack['pack_name']."</small></td>
                                         <td>".ucfirst($row['trans_status'])."</td>
                                         <td>".$return."</td>
-                                        <td>".$detail.$payment."</td>
+                                        <td>".$detail." ".$payment."</td>
 
 
                                     </tr>";

@@ -281,7 +281,10 @@
             })</script>";
     } ?>
     <script src="<?= base_url() ?>assets_admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+    <script>
+                        CKEDITOR.replace( 'editor' );
+                </script>
     <!-- Core plugin JavaScript-->
     <script src="<?= base_url() ?>assets_admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 

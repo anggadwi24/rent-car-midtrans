@@ -26,7 +26,7 @@
           </div>
           <div class="form-group">
             <label>Deskripsi</label>
-            <textarea class="form-control" name="mobil_desc"></textarea>
+            <textarea class="form-control" id="editor" name="mobil_desc"></textarea>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
