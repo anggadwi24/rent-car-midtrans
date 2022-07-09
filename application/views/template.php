@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="col-lg-9 col-md-6 mb-5">
-                <h4 class="text-uppercase text-light mb-4">Lokasi Kamis</h4>
+                <h4 class="text-uppercase text-light mb-4">Lokasi Kami</h4>
                 <div class="row mx-n1">
                     <div class="col-12 px-1 mb-2">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3943.4825210305366!2d115.17108821438731!3d-8.74058709159552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd2441bbc9395df%3A0x6d3f7e8025d161ba!2sJl.%20Taman%20Griya%20V%20No.20%2C%20Tuban%2C%20Kec.%20Kuta%2C%20Kabupaten%20Badung%2C%20Bali%2080361!5e0!3m2!1sid!2sid!4v1653036806617!5m2!1sid!2sid" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
