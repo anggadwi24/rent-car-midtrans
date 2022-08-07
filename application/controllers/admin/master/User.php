@@ -107,4 +107,20 @@ class User extends CI_Controller
         
     }
 
+    public function staff_hapus()
+    {
+        $users_id = $this->input->get('id');
+        $cek = $this->model_app->view_where('users',array('users_id'=>$users_id));
+        if($cek->num_rows() > 0){
+            $row = $cek->row_array();
+            $where = array('users_id'=>$users_id);
+            $this->model_app->delete('users',$where);
+            $this->session->set_flashdata('success','User berhasil dihapus');
+            redirect('admin/master/user/staff');
+        }else{
+            $this->session->set_flashdata('error','User tidak ditemukan');
+            redirect('admin/master/user/staff');
+        }
+    }
+
 }

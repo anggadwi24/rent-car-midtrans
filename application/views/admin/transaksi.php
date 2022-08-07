@@ -30,8 +30,8 @@
                             <?php if($record->num_rows() > 0){
                                 $no = 1;
                                 foreach($record->result_array() as $row){
-                                    $mobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$row['trans_mobil_id']))->row_array();
-                                    $pack = $this->model_app->view_where('cr_package',array('pack_id'=>$row['trans_pack_id']))->row_array();
+                                    // $mobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$row['trans_mobil_id']))->row_array();
+                                    // $pack = $this->model_app->view_where('cr_package',array('pack_id'=>$row['trans_pack_id']))->row_array();
                                     if($row['trans_return'] == 'y'){
                                         $return = '<small>Mobil Kembali</small>';
                                     }else{
@@ -50,7 +50,7 @@
                                         <td>".$row['trans_no']."</td>
                                         <td>".$row['trans_cus_name']."</td>
                                         <td>".date('d/m/Y',strtotime($row['trans_date_start']))." - ".date('d/m/Y',strtotime($row['trans_date_end']))."</td>
-                                        <td>".$mobil['mobil_name']." <small class='d-block'>".$pack['pack_name']."</small></td>
+                                        <td>".$row['mobil_name']." <small class='d-block'>".$row['pack_name']."</small></td>
                                         <td>".ucfirst($row['trans_status'])."</td>
                                         <td>".$return."</td>
                                         <td>".$detail." ".$payment."</td>

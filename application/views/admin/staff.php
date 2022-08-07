@@ -157,7 +157,7 @@
                           </div>
 
 
-                          <a href="<?= base_url('admin/master/users/staff_hapus?id='.$us['users_id']) ?>" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                          <a href="<?= base_url('admin/master/user/staff_hapus?id='.$us['users_id']) ?>" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                         <?php }?>
                         </td>
                     </tr>

@@ -13,7 +13,7 @@ class Sewa extends CI_Controller
 		}
 	}
     function index(){
-        $data['record'] = $this->model_app->view_order('cr_transaksi','trans_no','DESC');
+        $data['record'] = $this->db->query("SELECT * FROM cr_transaksi a JOIN cr_mobil b ON a.trans_mobil_id = b.mobil_id JOIN cr_package c ON c.pack_id = a.trans_pack_id ORDER BY trans_no DESC");
         $this->template->load('template_admin','admin/transaksi',$data);
     }
     function add(){

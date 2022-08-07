@@ -128,11 +128,12 @@
                         </thead>
                         <tbody>
                             <?php
-                                $record = $this->model_app->view_order('cr_transaksi','trans_no','DESC'); 
+                                // $record = $this->model_app->view_order('cr_transaksi','trans_no','DESC'); 
+                                $record = $this->db->query("SELECT * FROM cr_transaksi a JOIN cr_mobil b ON a.trans_mobil_id = b.mobil_id JOIN cr_package c ON c.pack_id = a.trans_pack_id ORDER BY trans_no DESC");
                                 if($record->num_rows() > 0){
                                 foreach($record->result_array() as $rows){
-                                    $mobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$rows['trans_mobil_id']))->row_array();
-                                    $pack = $this->model_app->view_where('cr_package',array('pack_id'=>$rows['trans_pack_id']))->row_array();
+                                    // $mobil = $this->model_app->view_where('cr_mobil',array('mobil_id'=>$rows['trans_mobil_id']))->row_array();
+                                    // $pack = $this->model_app->view_where('cr_package',array('pack_id'=>$rows['trans_pack_id']))->row_array();
                                     if($rows['trans_return'] == 'y'){
                                         $return = '<small>Mobil Kembali</small>';
                                     }else{
@@ -143,7 +144,7 @@
                                         <td>".$rows['trans_no']."</td>
                                         <td>".$rows['trans_cus_name']."</td>
                                         <td>".date('d/m/Y',strtotime($rows['trans_date_start']))." - ".date('d/m/Y',strtotime($rows['trans_date_end']))."</td>
-                                        <td>".$mobil['mobil_name']." <small class='d-block'>".$pack['pack_name']."</small></td>
+                                        <td>".$rows['mobil_name']." <small class='d-block'>".$rows['pack_name']."</small></td>
                                         <td>".ucfirst($rows['trans_status'])."</td>
                                         <td>".$return."</td>
                                       
